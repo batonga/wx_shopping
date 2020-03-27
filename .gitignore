@@ -1,5 +1,6 @@
 node_modules
 dist
+.git
 weapp
 .DS_Store
 .wepycache
