@@ -1,0 +1,85 @@
+<template>
+  <view>
+    <swiper indicator-dots autoplay circular>
+      <swiper-item wx:for="{{swiperList}}" wx:key="index">
+        <navigator url="{{item.navigator_url}}" open-type="{{item.open_type}}">
+          <image src="{{item.image_src}}" />
+        </navigator>
+      </swiper-item>
+    </swiper>
+    <view class="cates">
+      <block wx:for="{{cateList}}" wx:key="index">
+        <navigator
+          url="/pages/tabs/cates"
+          open-type="{{item.open_type}}"
+          wx:if="{{item.navigator_url!==undefined}}"
+          hover-class="none"
+        >
+          <image src="{{item.image_src}}" />
+        </navigator>
+        <image src="{{item.image_src}}" wx:else/>
+      </block>
+    </view>
+    <view class="floor">
+      <view wx:for="{{floorList}}" wx:key="index">
+        <!-- 楼层标题 -->
+        <image class="floor-title" src="{{item.floor_title.image_src}}" />
+        <!-- 楼层图片 -->
+        <view wx:for="{{item.product_list}}" wx:key="index" class="floor-img-box">
+          <image
+            class="floor-pic"
+            style="width:{{item.image_width}}rpx"
+            src="{{item.image_src}}"
+            @tap="goGoodsList({{item.navigator_url}})"
+          />
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import min from '@/mixins/tabs/home.js'
+export default class extends wepy.page {
+  // 把数据业务逻辑抽离到mixins目录下数载在mixin s 上
+  mixins = [min]
+}
+</script>
+<style lang="less">
+swiper {
+  height: 350rpx;
+  navigator,
+  image {
+    height: 100%;
+    width: 750rpx;
+  }
+}
+.cates {
+  display: flex;
+  justify-content: space-around;
+  margin: 40rpx 0;
+  image {
+    width: 128rpx;
+    height: 140rpx;
+  }
+}
+.floor {
+  .floor-title {
+    height: 50rpx;
+    width: 640rpx;
+    display: block;
+  }
+  .floor-img-box {
+    .floor-pic {
+      float: left;
+      height: 190rpx;
+      margin: 8rpx;
+      margin-top: 0;
+    }
+    &:nth-of-type(1) .floor-pic {
+      height: 390rpx;
+    }
+  }
+}
+</style>

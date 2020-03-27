@@ -1,0 +1,43 @@
+<template>
+  <view>
+    <block wx:for="{{goodsList}}" wx:key="index">
+      <van-card
+        num="{{item.goods_number}}"
+        title="{{item.goods_name}}"
+        price="{{item.goods_price}}"
+        thumb="{{item.goods_small_logo}}"
+        @tap="goGoodsDetail({{item.goods_id}})"
+      />
+      <!-- 分割线 -->
+      <view class="line"></view>
+    </block>
+    <!-- 触底底线 -->
+    <view class="foor-line" hidden="{{!isover}}">-------- 我是有底线的 --------</view>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import mini from '@/mixins/goods_list.js'
+export default class extends wepy.page {
+  config = {
+    navigationBarTitleText: '商品列表',
+    // 开启页面的上拉加载
+    onReachBottomDistance: 100,
+    // 允许下拉刷新
+    enablePullDownRefresh: true,
+    backgroundColor: '#eee'
+  }
+  mixins = [mini]
+}
+</script>
+<style lang="less">
+.line {
+  border-bottom: 1px solid #eee;
+}
+.foor-line {
+  text-align: center;
+  padding: 20rpx 0;
+  color: #ccc;
+  font-size: 26rpx;
+}
+</style>

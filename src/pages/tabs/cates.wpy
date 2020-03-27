@@ -1,0 +1,65 @@
+<template>
+  <view class="cates">
+    <!-- 左侧导航栏部分 -->
+    <scroll-view class="left" scroll-y style="height:{{wh}}px;">
+      <van-sidebar active-key="{{ activeKey }}" @change="onChange">
+        <van-sidebar-item title="{{item.cat_name}}" wx:for="{{cateList}}" wx:key="index" />
+      </van-sidebar>
+    </scroll-view>
+    <!-- 右侧商品显示 -->
+    <scroll-view class="right" scroll-y style="height:{{wh}}px;">
+      <block wx:for="{{secondCate}}" wx:key="index">
+        <van-row>
+          <van-col span="24" style="text-align:center;">
+            <text space="nbsp">/ {{item.cat_name}} /</text>
+          </van-col>
+        </van-row>
+        <van-row>
+          <block wx:for="{{item.children}}" wx:key="index">
+            <van-col span="8" class="cell" @tap="goGoodsList({{item.cat_id}})">
+              <image class="cat-icon" src="{{item.cat_icon}}" />
+              <view class="cat-name">{{item.cat_name}}</view>
+            </van-col>
+          </block>
+        </van-row>
+      </block>
+    </scroll-view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import min from '@/mixins/tabs/cates.js'
+export default class extends wepy.page {
+  config={
+    navigationBarTitleText: '商品分类'
+  }
+  mixins = [min]
+}
+</script>
+<style lang="less">
+.cates {
+  display: flex;
+  .left {
+    width: 180rpx;
+  }
+  .right {
+    text {
+      font-size: 26rpx;
+      font-weight: bold;
+      margin: 30px 0;
+      display: inline-block;
+    }
+    .cell {
+      text-align: center;
+      .cat-icon {
+        width: 120rpx;
+        height: 120rpx;
+      }
+      .cat-name {
+        font-size: 24rpx;
+      }
+    }
+  }
+}
+</style>
